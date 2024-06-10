@@ -1,18 +1,14 @@
 <script lang="ts">
+	// UI imports
 	import * as Card from '$lib/components/ui/card';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import AddScreen from '$lib/components/AddScreen/AddScreen.svelte';
+	// dragEvent imports
 	import { draggable, dropZone } from '$lib/utils/utils';
 	export let data;
 </script>
 
 <main>
-	<div class="flex gap-4 px-4">
-		<Input type="text" />
-		<Button>Add Card</Button>
-	</div>
-
-	<div class="m-4 flex justify-center gap-4">
+	<div class="mx-4 flex justify-center gap-4">
 		{#each data.columns as column}
 			{@const cards = data.cards.filter((c) => c.column === column.id)}
 			<div
@@ -48,4 +44,5 @@
 			</div>
 		{/each}
 	</div>
+	<AddScreen />
 </main>
