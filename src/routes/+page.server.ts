@@ -3,16 +3,21 @@ export async function load() {
 		columns: [
 			{
 				id: 1,
+				title: 'Backlog',
+				description: 'Tasks in backlog.'
+			},
+			{
+				id: 2,
 				title: 'In Progress',
 				description: 'Tasks in progress.'
 			},
 			{
-				id: 2,
+				id: 3,
 				title: 'Stashed',
 				description: 'Tasks in stash.'
 			},
 			{
-				id: 3,
+				id: 4,
 				title: 'Completed',
 				description: 'Completed tasks.'
 			}
@@ -43,6 +48,7 @@ export async function load() {
 				title: 'Task-5',
 				column: 2
 			},
+
 			{
 				id: 66,
 				title: 'Task-6',

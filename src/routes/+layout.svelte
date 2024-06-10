@@ -2,6 +2,8 @@
 	import '../app.css';
 </script>
 
-<slot></slot>
+<nav>
+	<div class="p-4 text-3xl font-semibold uppercase">CardFlow</div>
+</nav>
 
-<style></style>
+<slot />
