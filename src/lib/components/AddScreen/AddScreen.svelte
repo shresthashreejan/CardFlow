@@ -1,10 +1,14 @@
 <script lang="ts">
+	// UI imports
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
+
+	// API imports
+	import * as dbAPI from '$lib/api/dbApi';
 </script>
 
 <Dialog.Root>
@@ -21,7 +25,7 @@
 				<Card.Root>
 					<Card.Content class="space-y-2 p-4">
 						<div class="space-y-1">
-							<Input id="cardtitle" placeholder="Title" />
+							<Input id="cardtitle" placeholder="Card's title" />
 						</div>
 						<div class="space-y-1">
 							<Textarea id="cardnotes" placeholder="Notes" />
@@ -36,7 +40,7 @@
 				<Card.Root>
 					<Card.Content class="space-y-2 p-4">
 						<div class="space-y-1">
-							<Input id="columntitle" placeholder="Title" />
+							<Input id="columntitle" placeholder="Column's title" />
 						</div>
 						<div class="space-y-1">
 							<Textarea id="columndesc" placeholder="Description" />

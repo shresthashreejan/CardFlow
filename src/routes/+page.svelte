@@ -4,6 +4,7 @@
 	import AddScreen from '$lib/components/AddScreen/AddScreen.svelte';
 	// dragEvent imports
 	import { draggable, dropZone } from '$lib/utils/utils';
+
 	export let data;
 </script>
 
@@ -19,7 +20,6 @@
 					if (card) {
 						card.column = column.id;
 					}
-					data = data;
 				}
 			}}
 			>
