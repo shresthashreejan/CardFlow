@@ -20,7 +20,7 @@ const db = new Dexie('CardFlowDB') as Dexie & {
 
 db.version(1).stores({
 	columns: '++id, title, description',
-	cards: '++id, title, column'
+	cards: '++id, column, title, notes'
 });
 
 export type { Column, Card };

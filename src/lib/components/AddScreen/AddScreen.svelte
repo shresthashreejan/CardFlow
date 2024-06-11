@@ -8,7 +8,35 @@
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 
 	// API imports
-	import * as dbAPI from '$lib/api/dbApi';
+	import * as dbAPI from '$lib/api/dbAPI';
+
+	function addCard(event: Event) {
+		event.preventDefault();
+		const formData = new FormData(event.target as HTMLFormElement);
+		dbAPI
+			.addCard(formData)
+			.then(() => {
+				alert('Card added successfully.');
+				(event.target as HTMLFormElement).reset();
+			})
+			.catch(() => {
+				alert('Error adding card.');
+			});
+	}
+
+	function addColumn(event: Event) {
+		event.preventDefault();
+		const formData = new FormData(event.target as HTMLFormElement);
+		dbAPI
+			.addColumn(formData)
+			.then(() => {
+				alert('Column added successfully.');
+				(event.target as HTMLFormElement).reset();
+			})
+			.catch(() => {
+				alert('Error adding column.');
+			});
+	}
 </script>
 
 <Dialog.Root>
@@ -24,31 +52,23 @@
 			<Tabs.Content value="card">
 				<Card.Root>
 					<Card.Content class="space-y-2 p-4">
-						<div class="space-y-1">
-							<Input id="cardtitle" placeholder="Card's title" />
-						</div>
-						<div class="space-y-1">
-							<Textarea id="cardnotes" placeholder="Notes" />
-						</div>
+						<form onsubmit={addCard} class="flex flex-col gap-4">
+							<Input name="title" placeholder="Card's title" />
+							<Textarea name="notes" placeholder="Notes" />
+							<Button type="submit">Save</Button>
+						</form>
 					</Card.Content>
-					<Card.Footer>
-						<Button>Save</Button>
-					</Card.Footer>
 				</Card.Root>
 			</Tabs.Content>
 			<Tabs.Content value="column">
 				<Card.Root>
 					<Card.Content class="space-y-2 p-4">
-						<div class="space-y-1">
-							<Input id="columntitle" placeholder="Column's title" />
-						</div>
-						<div class="space-y-1">
-							<Textarea id="columndesc" placeholder="Description" />
-						</div>
+						<form onsubmit={addColumn} class="flex flex-col gap-4">
+							<Input name="title" placeholder="Column's title" />
+							<Textarea name="description" placeholder="Description" />
+							<Button type="submit">Save</Button>
+						</form>
 					</Card.Content>
-					<Card.Footer>
-						<Button>Save</Button>
-					</Card.Footer>
 				</Card.Root>
 			</Tabs.Content>
 		</Tabs.Root>
