@@ -30,5 +30,18 @@ export async function addCard(formData: FormData) {
 	}
 }
 
-// TODO
-export async function fetchData() {}
+export async function fetchColumns() {
+	try {
+		return await db.columns.toArray();
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function fetchCards() {
+	try {
+		return await db.cards.toArray();
+	} catch (error) {
+		console.error(error);
+	}
+}

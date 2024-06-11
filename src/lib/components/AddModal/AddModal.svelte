@@ -1,5 +1,4 @@
 <script lang="ts">
-	// UI imports
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
@@ -7,8 +6,12 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 
-	// API imports
 	import * as dbAPI from '$lib/api/dbAPI';
+
+	type updateProps = {
+		dbUpdate: () => void;
+	};
+	let { dbUpdate }: updateProps = $props();
 
 	function addCard(event: Event) {
 		event.preventDefault();
@@ -18,6 +21,7 @@
 			.then(() => {
 				alert('Card added successfully.');
 				(event.target as HTMLFormElement).reset();
+				dbUpdate();
 			})
 			.catch(() => {
 				alert('Error adding card.');
@@ -32,6 +36,7 @@
 			.then(() => {
 				alert('Column added successfully.');
 				(event.target as HTMLFormElement).reset();
+				dbUpdate();
 			})
 			.catch(() => {
 				alert('Error adding column.');
