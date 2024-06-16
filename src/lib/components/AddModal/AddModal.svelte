@@ -54,9 +54,7 @@
 
 <main>
 	<Dialog.Root>
-		<Dialog.Trigger class={buttonVariants({ class: 'absolute right-0 top-0 m-4' })}
-			><Plus /></Dialog.Trigger
-		>
+		<Dialog.Trigger class={buttonVariants()}><Plus /></Dialog.Trigger>
 		<Dialog.Content>
 			<Tabs.Root value={hasColumn ? 'card' : 'column'}>
 				<Tabs.List class="flex justify-evenly">
@@ -70,7 +68,6 @@
 						<Card.Content class="space-y-2 p-4">
 							<form onsubmit={addCard} class="flex flex-col gap-4">
 								<Input name="title" placeholder="Card's title" />
-								<Textarea name="notes" placeholder="Notes" />
 								<Button type="submit">Save</Button>
 							</form>
 						</Card.Content>

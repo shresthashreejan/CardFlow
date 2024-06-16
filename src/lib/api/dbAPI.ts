@@ -18,12 +18,10 @@ export async function addCard(formData: FormData) {
 	try {
 		const column = 1;
 		const title = (formData.get('title') as string) || '';
-		const notes = (formData.get('notes') as string) || '';
 
 		await db.cards.add({
 			column: column,
-			title: title,
-			notes: notes
+			title: title
 		});
 	} catch (error) {
 		console.error(error);

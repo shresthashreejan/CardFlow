@@ -10,7 +10,6 @@ interface Card {
 	id: number;
 	column: number;
 	title: string;
-	notes: string;
 }
 
 const db = new Dexie('CardFlowDB') as Dexie & {
@@ -20,7 +19,7 @@ const db = new Dexie('CardFlowDB') as Dexie & {
 
 db.version(1).stores({
 	columns: '++id, title, description',
-	cards: '++id, column, title, notes'
+	cards: '++id, column, title'
 });
 
 export type { Column, Card };

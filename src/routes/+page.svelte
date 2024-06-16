@@ -1,5 +1,6 @@
 <script lang="ts">
 	import AddModal from '$lib/components/AddModal/AddModal.svelte';
+	import ThemeController from '$lib/components/ThemeController/ThemeController.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import { toast } from 'svelte-sonner';
 	import { Toaster } from '$lib/components/ui/sonner';
@@ -42,13 +43,13 @@
 </script>
 
 <main>
-	<div class="flex justify-start gap-4 overflow-auto px-4 pb-4">
+	<div class="flex flex-col justify-start gap-4 overflow-auto px-4 pb-4 xl:flex-row">
 		{#if !loading}
 			{#if data.columns && data.columns.length !== 0}
 				{#each data.columns as column}
 					{@const cards = data.cards?.filter((c) => c.column === column.id)}
 					<div
-						class="min-w-[20vw]"
+						class="min-w-full xl:min-w-[20vw]"
 						data-columnid={column.id}
 						use:dropZone={{
 							ondropzone(cardId: string) {
@@ -78,7 +79,7 @@
 							<div class="flex flex-col gap-4 px-4 pb-4">
 								{#if cards}
 									{#each cards as card}
-										<div use:draggable={String(card.id)}>
+										<div use:draggable={String(card.id)} class="transition-all hover:scale-105">
 											<Card.Content class="m-0 p-0">
 												<Card.Root class="flex items-center justify-between break-all p-4">
 													<div class="w-[90%]">
@@ -103,6 +104,9 @@
 			{/if}
 		{/if}
 	</div>
-	<AddModal {dbUpdate} hasColumn={data.columns && data.columns.length !== 0 ? true : false} />
+	<div class="absolute right-0 top-0 flex items-center gap-4 p-4">
+		<ThemeController />
+		<AddModal {dbUpdate} hasColumn={data.columns && data.columns.length !== 0 ? true : false} />
+	</div>
 	<Toaster />
 </main>
