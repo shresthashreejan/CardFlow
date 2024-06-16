@@ -5,6 +5,9 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
+	import { toast } from 'svelte-sonner';
+	import { Toaster } from '$lib/components/ui/sonner';
+	import { Plus } from 'lucide-svelte';
 
 	import * as dbAPI from '$lib/api/dbAPI';
 
@@ -20,12 +23,12 @@
 		dbAPI
 			.addCard(formData)
 			.then(() => {
-				alert('Card added successfully.');
-				(event.target as HTMLFormElement).reset();
 				dbUpdate();
+				showToast('New card added!');
+				(event.target as HTMLFormElement).reset();
 			})
 			.catch(() => {
-				alert('Error adding card.');
+				console.error('Error adding card.');
 			});
 	}
 
@@ -35,50 +38,57 @@
 		dbAPI
 			.addColumn(formData)
 			.then(() => {
-				alert('Column added successfully.');
-				(event.target as HTMLFormElement).reset();
 				dbUpdate();
+				showToast('New column added!');
+				(event.target as HTMLFormElement).reset();
 			})
 			.catch(() => {
-				alert('Error adding column.');
+				console.error('Error adding column.');
 			});
+	}
+
+	function showToast(message: string) {
+		toast.success(message);
 	}
 </script>
 
-<Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ class: 'absolute bottom-0 right-0 m-4 text-2xl' })}
-		>+</Dialog.Trigger
-	>
-	<Dialog.Content>
-		<Tabs.Root value={hasColumn ? 'card' : 'column'}>
-			<Tabs.List class="flex justify-evenly">
-				{#if hasColumn}
-					<Tabs.Trigger value="card" class="w-full">Card</Tabs.Trigger>
-				{/if}
-				<Tabs.Trigger value="column" class="w-full">Column</Tabs.Trigger>
-			</Tabs.List>
-			<Tabs.Content value="card">
-				<Card.Root>
-					<Card.Content class="space-y-2 p-4">
-						<form onsubmit={addCard} class="flex flex-col gap-4">
-							<Input name="title" placeholder="Card's title" />
-							<Textarea name="notes" placeholder="Notes" />
-							<Button type="submit">Save</Button>
-						</form>
-					</Card.Content>
-				</Card.Root>
-			</Tabs.Content>
-			<Tabs.Content value="column">
-				<Card.Root>
-					<Card.Content class="space-y-2 p-4">
-						<form onsubmit={addColumn} class="flex flex-col gap-4">
-							<Input name="title" placeholder="Column's title" />
-							<Textarea name="description" placeholder="Description" />
-							<Button type="submit">Save</Button>
-						</form>
-					</Card.Content>
-				</Card.Root>
-			</Tabs.Content>
-		</Tabs.Root>
-	</Dialog.Content>
-</Dialog.Root>
+<main>
+	<Dialog.Root>
+		<Dialog.Trigger class={buttonVariants({ class: 'absolute right-0 top-0 m-4' })}
+			><Plus /></Dialog.Trigger
+		>
+		<Dialog.Content>
+			<Tabs.Root value={hasColumn ? 'card' : 'column'}>
+				<Tabs.List class="flex justify-evenly">
+					{#if hasColumn}
+						<Tabs.Trigger value="card" class="w-full">Card</Tabs.Trigger>
+					{/if}
+					<Tabs.Trigger value="column" class="w-full">Column</Tabs.Trigger>
+				</Tabs.List>
+				<Tabs.Content value="card">
+					<Card.Root>
+						<Card.Content class="space-y-2 p-4">
+							<form onsubmit={addCard} class="flex flex-col gap-4">
+								<Input name="title" placeholder="Card's title" />
+								<Textarea name="notes" placeholder="Notes" />
+								<Button type="submit">Save</Button>
+							</form>
+						</Card.Content>
+					</Card.Root>
+				</Tabs.Content>
+				<Tabs.Content value="column">
+					<Card.Root>
+						<Card.Content class="space-y-2 p-4">
+							<form onsubmit={addColumn} class="flex flex-col gap-4">
+								<Input name="title" placeholder="Column's title" />
+								<Textarea name="description" placeholder="Description" />
+								<Button type="submit">Save</Button>
+							</form>
+						</Card.Content>
+					</Card.Root>
+				</Tabs.Content>
+			</Tabs.Root>
+		</Dialog.Content>
+	</Dialog.Root>
+	<Toaster />
+</main>

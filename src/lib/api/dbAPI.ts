@@ -48,7 +48,24 @@ export async function fetchCards() {
 
 export async function updateColumnAssignment(cardId: string, columnId: string) {
 	try {
-		console.log('update');
+		db.cards.update(parseInt(cardId), { column: parseInt(columnId) });
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function deleteColumn(columnId: string) {
+	try {
+		db.cards.filter((card) => card.column === parseInt(columnId)).delete();
+		db.columns.delete(parseInt(columnId));
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function deleteCard(cardId: string) {
+	try {
+		db.cards.delete(parseInt(cardId));
 	} catch (error) {
 		console.error(error);
 	}
