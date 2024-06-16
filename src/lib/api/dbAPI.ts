@@ -45,3 +45,11 @@ export async function fetchCards() {
 		console.error(error);
 	}
 }
+
+export async function updateColumnAssignment(cardId: string, columnId: string) {
+	try {
+		console.log('update');
+	} catch (error) {
+		console.error(error);
+	}
+}

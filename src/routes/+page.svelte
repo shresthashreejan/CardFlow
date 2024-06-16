@@ -2,7 +2,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import AddModal from '$lib/components/AddModal/AddModal.svelte';
 
-	import { draggable, dropZone } from '$lib/utils/utils';
+	import { draggable, dropZone } from '$lib/utils/dragEventUtils';
 	import * as dbAPI from '$lib/api/dbAPI';
 
 	export let data;
@@ -23,14 +23,15 @@
 					{@const cards = data.cards?.filter((c) => c.column === column.id)}
 					<div
 						class="w-full"
+						data-columnid={column.id}
 						use:dropZone={{
-					ondropzone(cardId: string) {
-						const card = data.cards?.find((c) => c.id === Number(cardId));
-						if (card) {
-							card.column = column.id;
-						}
-					}
-				}}
+							ondropzone(cardId: string) {
+								const card = data.cards?.find((c) => c.id === Number(cardId));
+								if (card) {
+									card.column = column.id;
+								}
+							}
+						}}
 					>
 						<Card.Root>
 							<Card.Header>

@@ -1,3 +1,9 @@
+import * as dbAPI from '$lib/api/dbAPI';
+
+function updateColumnAssignment(cardId: string, columnId: string) {
+	dbAPI.updateColumnAssignment(cardId, columnId);
+}
+
 export function draggable(node: HTMLElement, data: string) {
 	let state = data;
 	node.draggable = true;
@@ -34,6 +40,10 @@ export function dropZone(node: HTMLElement, options: { ondropzone: (cardId: stri
 		e.preventDefault();
 		const data = e.dataTransfer!.getData('text/plain');
 		state.ondropzone(data);
+		let columnId = (e.currentTarget as HTMLDivElement)?.dataset.columnid;
+		if (columnId) {
+			updateColumnAssignment(data, columnId);
+		}
 	}
 
 	node.addEventListener('dragover', dragOver);
