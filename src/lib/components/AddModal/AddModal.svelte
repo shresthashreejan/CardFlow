@@ -8,10 +8,11 @@
 
 	import * as dbAPI from '$lib/api/dbAPI';
 
-	type updateProps = {
+	type parentProps = {
 		dbUpdate: () => void;
+		hasColumn: boolean;
 	};
-	let { dbUpdate }: updateProps = $props();
+	let { dbUpdate, hasColumn }: parentProps = $props();
 
 	function addCard(event: Event) {
 		event.preventDefault();
@@ -49,10 +50,12 @@
 		>+</Dialog.Trigger
 	>
 	<Dialog.Content>
-		<Tabs.Root value="card">
-			<Tabs.List class="grid w-full grid-cols-2">
-				<Tabs.Trigger value="card">Card</Tabs.Trigger>
-				<Tabs.Trigger value="column">Column</Tabs.Trigger>
+		<Tabs.Root value={hasColumn ? 'card' : 'column'}>
+			<Tabs.List class="flex justify-evenly">
+				{#if hasColumn}
+					<Tabs.Trigger value="card" class="w-full">Card</Tabs.Trigger>
+				{/if}
+				<Tabs.Trigger value="column" class="w-full">Column</Tabs.Trigger>
 			</Tabs.List>
 			<Tabs.Content value="card">
 				<Card.Root>

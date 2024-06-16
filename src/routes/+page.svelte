@@ -59,5 +59,5 @@
 			{/if}
 		{/if}
 	</div>
-	<AddModal {dbUpdate} />
+	<AddModal {dbUpdate} hasColumn={data.columns && data.columns.length !== 0 ? true : false} />
 </main>
