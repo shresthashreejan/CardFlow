@@ -8,7 +8,7 @@
 	import { draggable, dropZone } from '$lib/utils/dragEventUtils';
 	import * as dbAPI from '$lib/api/dbAPI';
 
-	export let data;
+	let { data } = $props();
 	let loading = data && data.columns ? false : true;
 
 	async function dbUpdate() {
@@ -62,9 +62,8 @@
 					>
 						<Card.Root>
 							<Card.Header>
-								<Card.Title class="flex items-center justify-between break-all"
-									>{column.title}
-
+								<Card.Title class="flex items-center justify-between break-all">
+									{column.title}
 									<CircleMinus
 										class="z-100 cursor-pointer"
 										onclick={deleteColumn}

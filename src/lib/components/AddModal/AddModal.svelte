@@ -8,7 +8,6 @@
 	import { toast } from 'svelte-sonner';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { Plus } from 'lucide-svelte';
-
 	import * as dbAPI from '$lib/api/dbAPI';
 
 	type parentProps = {
