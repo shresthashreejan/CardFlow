@@ -49,7 +49,7 @@
 				{#each data.columns as column}
 					{@const cards = data.cards?.filter((c) => c.column === column.id)}
 					<div
-						class="min-w-full xl:min-w-[20vw]"
+						class="min-w-full xl:min-w-[20vw] xl:max-w-[20vw]"
 						data-columnid={column.id}
 						use:dropZone={{
 							ondropzone(cardId: string) {
@@ -105,7 +105,11 @@
 	</div>
 	<div class="absolute right-0 top-0 flex items-center gap-4 p-4">
 		<ThemeController />
-		<AddModal {dbUpdate} hasColumn={data.columns && data.columns.length !== 0 ? true : false} />
+		<AddModal
+			{dbUpdate}
+			hasColumn={data.columns && data.columns.length !== 0 ? true : false}
+			columnData={data.columns}
+		/>
 	</div>
 	<Toaster />
 </main>

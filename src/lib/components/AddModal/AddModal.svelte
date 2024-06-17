@@ -3,22 +3,30 @@
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import * as Select from '$lib/components/ui/select';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	import { toast } from 'svelte-sonner';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { Plus } from 'lucide-svelte';
 	import * as dbAPI from '$lib/api/dbAPI';
+	import type { Column } from '$lib/db/db';
 
 	type parentProps = {
 		dbUpdate: () => void;
 		hasColumn: boolean;
+		columnData: Column[] | undefined;
 	};
-	let { dbUpdate, hasColumn }: parentProps = $props();
+	let { dbUpdate, hasColumn, columnData }: parentProps = $props();
 
 	function addCard(event: Event) {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
+		const title = (formData.get('title') as string) || '';
+		if (!title) {
+			showError('Title cannot be blank!');
+			return;
+		}
 		dbAPI
 			.addCard(formData)
 			.then(() => {
@@ -34,6 +42,11 @@
 	function addColumn(event: Event) {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
+		const title = (formData.get('title') as string) || '';
+		if (!title) {
+			showError('Title cannot be blank!');
+			return;
+		}
 		dbAPI
 			.addColumn(formData)
 			.then(() => {
@@ -48,6 +61,10 @@
 
 	function showToast(message: string) {
 		toast.success(message);
+	}
+
+	function showError(message: string) {
+		toast.error(message);
 	}
 </script>
 
@@ -66,6 +83,18 @@
 					<Card.Root>
 						<Card.Content class="space-y-2 p-4">
 							<form onsubmit={addCard} class="flex flex-col gap-4">
+								{#if columnData}
+									<Select.Root>
+										<Select.Trigger class="w-full">
+											<Select.Value placeholder="Select a column" />
+										</Select.Trigger>
+										<Select.Content>
+											{#each columnData as column}
+												<Select.Item value={column.id}>{column.title}</Select.Item>
+											{/each}
+										</Select.Content>
+									</Select.Root>
+								{/if}
 								<Input name="title" placeholder="Card's title" />
 								<Button type="submit">Save</Button>
 							</form>
