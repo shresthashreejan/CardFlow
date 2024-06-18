@@ -119,10 +119,10 @@
 	</div>
 	{#if showModal}
 		<div
-			class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-10"
+			class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-20"
 			onclick={setShowModal}
 		>
-			<div class="w-full md:w-1/3" onclick={(e) => e.stopPropagation()}>
+			<div class="mx-4 w-full lg:mx-0 lg:w-1/3" onclick={(e) => e.stopPropagation()}>
 				<AddModal
 					{dbUpdate}
 					hasColumn={data.columns && data.columns.length !== 0 ? true : false}
