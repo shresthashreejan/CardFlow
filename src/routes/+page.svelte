@@ -52,6 +52,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>CardFlow.</title>
+</svelte:head>
+
 <main>
 	<div class="flex flex-col justify-start gap-4 overflow-auto px-4 pb-4 xl:flex-row">
 		{#if !loading}
