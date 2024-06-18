@@ -16,15 +16,32 @@
 		columnData: Column[] | undefined;
 	};
 	let { dbUpdate, hasColumn, columnData }: parentProps = $props();
+	let selectedColumnId: string = $state('');
+
+	$effect(() => {
+		selectedColumnId = '';
+	});
+
+	function setSelectedColId(event: Event) {
+		const target = event.target as HTMLFormElement;
+		if (target?.dataset?.value) {
+			selectedColumnId = target.dataset.value;
+		}
+	}
 
 	function addCard(event: Event) {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
 		const title = (formData.get('title') as string) || '';
+		if (!selectedColumnId) {
+			showError('Select a column!');
+			return;
+		}
 		if (!title) {
 			showError('Title cannot be blank!');
 			return;
 		}
+		formData.append('columnid', selectedColumnId);
 		dbAPI
 			.addCard(formData)
 			.then(() => {
@@ -86,7 +103,9 @@
 									</Select.Trigger>
 									<Select.Content>
 										{#each columnData as column}
-											<Select.Item value={column.id}>{column.title}</Select.Item>
+											<Select.Item value={column.id} onclick={setSelectedColId}>
+												{column.title}
+											</Select.Item>
 										{/each}
 									</Select.Content>
 								</Select.Root>

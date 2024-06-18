@@ -16,11 +16,11 @@ export async function addColumn(formData: FormData) {
 
 export async function addCard(formData: FormData) {
 	try {
-		const column = 1;
+		const column = (formData.get('columnid') as string) || '';
 		const title = (formData.get('title') as string) || '';
 
 		await db.cards.add({
-			column: column,
+			column: parseInt(column),
 			title: title
 		});
 	} catch (error) {

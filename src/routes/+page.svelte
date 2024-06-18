@@ -16,6 +16,9 @@
 
 	function setShowModal() {
 		showModal = !showModal;
+		if (!showModal) {
+			location.reload();
+		}
 	}
 
 	async function dbUpdate() {
@@ -85,7 +88,7 @@
 							<div class="flex flex-col gap-4 px-4 pb-4">
 								{#if cards}
 									{#each cards as card}
-										<div use:draggable={String(card.id)} class="transition-all hover:scale-105">
+										<div use:draggable={String(card.id)} class="transition-all hover:scale-95">
 											<Card.Content class="m-0 p-0">
 												<Card.Root class="flex items-center justify-between break-all p-4">
 													<div class="w-[90%]">
