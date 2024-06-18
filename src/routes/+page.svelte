@@ -2,14 +2,21 @@
 	import AddModal from '$lib/components/AddModal/AddModal.svelte';
 	import ThemeController from '$lib/components/ThemeController/ThemeController.svelte';
 	import * as Card from '$lib/components/ui/card';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import { toast } from 'svelte-sonner';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { CircleMinus } from 'lucide-svelte';
+	import { Plus } from 'lucide-svelte';
 	import { draggable, dropZone } from '$lib/utils/dragEventUtils';
 	import * as dbAPI from '$lib/api/dbAPI';
 
 	let { data } = $props();
 	let loading = data && data.columns ? false : true;
+	let showModal: boolean = $state(false);
+
+	function setShowModal() {
+		showModal = !showModal;
+	}
 
 	async function dbUpdate() {
 		let columns = await dbAPI.fetchColumns();
@@ -105,11 +112,21 @@
 	</div>
 	<div class="absolute right-0 top-0 flex items-center gap-4 p-4">
 		<ThemeController />
-		<AddModal
-			{dbUpdate}
-			hasColumn={data.columns && data.columns.length !== 0 ? true : false}
-			columnData={data.columns}
-		/>
+		<Button onclick={setShowModal}><Plus onclick={setShowModal} /></Button>
 	</div>
+	{#if showModal}
+		<div
+			class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-10"
+			onclick={setShowModal}
+		>
+			<div class="w-full md:w-1/3" onclick={(e) => e.stopPropagation()}>
+				<AddModal
+					{dbUpdate}
+					hasColumn={data.columns && data.columns.length !== 0 ? true : false}
+					columnData={data.columns}
+				/>
+			</div>
+		</div>
+	{/if}
 	<Toaster />
 </main>
