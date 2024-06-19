@@ -25,6 +25,10 @@
 		}
 	}
 
+	function closeModal() {
+		showUpdateModal = false;
+	}
+
 	async function dbUpdate() {
 		let columns = await dbAPI.fetchColumns();
 		let cards = await dbAPI.fetchCards();
@@ -183,6 +187,7 @@
 	{#if showUpdateModal}
 		<div
 			class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-20"
+			onclick={closeModal}
 		>
 			<div class="mx-4 w-full lg:mx-0 lg:w-1/3" onclick={(e) => e.stopPropagation()}>
 				<UpdateModal {dbUpdate} columnId={colId} {columnTitle} {columnDescription} />
