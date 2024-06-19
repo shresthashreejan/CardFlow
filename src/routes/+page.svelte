@@ -1,18 +1,22 @@
 <script lang="ts">
 	import AddModal from '$lib/components/AddModal/AddModal.svelte';
+	import UpdateModal from '$lib/components/UpdateModal/UpdateModal.svelte';
 	import ThemeController from '$lib/components/ThemeController/ThemeController.svelte';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { toast } from 'svelte-sonner';
-	import { Toaster } from '$lib/components/ui/sonner';
-	import { CircleMinus } from 'lucide-svelte';
+	import { CircleMinus, Menu } from 'lucide-svelte';
 	import { Plus } from 'lucide-svelte';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { draggable, dropZone } from '$lib/utils/dragEventUtils';
 	import * as dbAPI from '$lib/api/dbAPI';
 
 	let { data } = $props();
 	let loading = data && data.columns ? false : true;
 	let showModal: boolean = $state(false);
+	let showUpdateModal: boolean = $state(false);
+	let colId: string = $state('');
+	let columnTitle: string = $state('');
+	let columnDescription: string = $state('');
 
 	function setShowModal() {
 		showModal = !showModal;
@@ -47,8 +51,20 @@
 		}
 	}
 
-	function showToast(message: string) {
-		toast.success(message);
+	async function editColumn(e: MouseEvent) {
+		let columnId = (e.target as HTMLButtonElement)?.dataset.columnid;
+		if (columnId) {
+			let id = parseInt(columnId);
+			let column = data.columns?.find((column) => column.id === id);
+			colId = columnId;
+			if (column?.title) {
+				columnTitle = column.title;
+			}
+			if (column?.description) {
+				columnDescription = column.description;
+			}
+		}
+		showUpdateModal = true;
 	}
 </script>
 
@@ -75,16 +91,43 @@
 						}}
 					>
 						<Card.Root>
-							<Card.Header>
-								<Card.Title class="group flex items-center justify-between break-words">
+							<Card.Header class="group">
+								<Card.Title class="flex items-center justify-between break-words">
 									<div>
 										{column.title}
 									</div>
-									<CircleMinus
-										class="z-10 cursor-pointer opacity-0 transition-all group-hover:opacity-100"
-										onclick={deleteColumn}
-										data-columnid={column.id}
-									/>
+									<DropdownMenu.Root>
+										<DropdownMenu.Trigger asChild let:builder>
+											<Button
+												builders={[builder]}
+												variant="ghost"
+												class="px-2 opacity-0 transition-all group-hover:opacity-100"
+												><Menu /></Button
+											>
+										</DropdownMenu.Trigger>
+										<DropdownMenu.Content>
+											<DropdownMenu.Group>
+												<DropdownMenu.Item>
+													<div
+														onclick={editColumn}
+														data-columnid={column.id}
+														class="w-full cursor-pointer"
+													>
+														Edit
+													</div>
+												</DropdownMenu.Item>
+												<DropdownMenu.Item>
+													<div
+														onclick={deleteColumn}
+														data-columnid={column.id}
+														class="w-full cursor-pointer"
+													>
+														Delete
+													</div>
+												</DropdownMenu.Item>
+											</DropdownMenu.Group>
+										</DropdownMenu.Content>
+									</DropdownMenu.Root>
 								</Card.Title>
 								{#if column.description}
 									<Card.Description>{column.description}</Card.Description>
@@ -137,5 +180,13 @@
 			</div>
 		</div>
 	{/if}
-	<Toaster />
+	{#if showUpdateModal}
+		<div
+			class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-70 dark:bg-white dark:bg-opacity-20"
+		>
+			<div class="mx-4 w-full lg:mx-0 lg:w-1/3" onclick={(e) => e.stopPropagation()}>
+				<UpdateModal {dbUpdate} columnId={colId} {columnTitle} {columnDescription} />
+			</div>
+		</div>
+	{/if}
 </main>

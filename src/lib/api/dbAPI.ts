@@ -14,6 +14,17 @@ export async function addColumn(formData: FormData) {
 	}
 }
 
+export async function updateColumn(formData: FormData) {
+	try {
+		const columnId = (formData.get('columnid') as string) || '';
+		const title = (formData.get('title') as string) || '';
+		const description = (formData.get('description') as string) || '';
+		db.columns.update(parseInt(columnId), { title: title, description: description });
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 export async function addCard(formData: FormData) {
 	try {
 		const column = (formData.get('columnid') as string) || '';
