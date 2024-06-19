@@ -32,7 +32,7 @@
 		if (columnId) {
 			dbAPI.deleteColumn(columnId).then(() => {
 				dbUpdate();
-				showToast('Column deleted!');
+				location.reload();
 			});
 		}
 	}
@@ -42,7 +42,7 @@
 		if (cardId) {
 			dbAPI.deleteCard(cardId).then(() => {
 				dbUpdate();
-				showToast('Card deleted!');
+				location.reload();
 			});
 		}
 	}
@@ -76,10 +76,12 @@
 					>
 						<Card.Root>
 							<Card.Header>
-								<Card.Title class="flex items-center justify-between break-all">
-									{column.title}
+								<Card.Title class="group flex items-center justify-between break-words">
+									<div>
+										{column.title}
+									</div>
 									<CircleMinus
-										class="z-100 cursor-pointer"
+										class="z-10 cursor-pointer opacity-0 transition-all group-hover:opacity-100"
 										onclick={deleteColumn}
 										data-columnid={column.id}
 									/>
@@ -94,12 +96,12 @@
 									{#each cards as card}
 										<div use:draggable={String(card.id)} class="transition-all hover:scale-95">
 											<Card.Content class="m-0 p-0">
-												<Card.Root class="flex items-center justify-between break-all p-4">
+												<Card.Root class="group flex items-center justify-between break-words p-4">
 													<div class="w-[90%]">
 														{card.title}
 													</div>
 													<CircleMinus
-														class="z-100 cursor-pointer"
+														class="z-10 cursor-pointer opacity-0 transition-all group-hover:opacity-100"
 														onclick={deleteCard}
 														data-cardid={card.id}
 													/>
