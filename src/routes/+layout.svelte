@@ -3,10 +3,6 @@
 	import { ModeWatcher } from 'mode-watcher';
 </script>
 
-<nav>
-	<h1 class="p-4 text-3xl font-semibold uppercase">CardFlow</h1>
-</nav>
-
 <ModeWatcher />
 <slot />
 

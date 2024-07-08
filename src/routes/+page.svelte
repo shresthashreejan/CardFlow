@@ -76,8 +76,20 @@
 	<title>CardFlow.</title>
 </svelte:head>
 
+<div class="absolute flex w-full items-center justify-between gap-4 p-4">
+	<nav>
+		<h1 class="text-3xl font-semibold uppercase">CardFlow</h1>
+	</nav>
+	<div class="flex gap-4">
+		<ThemeController />
+		<Button onclick={setShowModal}><Plus onclick={setShowModal} /></Button>
+	</div>
+</div>
+
 <main>
-	<div class="flex flex-col justify-start gap-4 overflow-auto px-4 pb-4 xl:flex-row">
+	<div
+		class="flex min-h-screen flex-col justify-start gap-4 overflow-auto px-4 pb-4 pt-16 xl:flex-row"
+	>
 		{#if !loading}
 			{#if data.columns && data.columns.length !== 0}
 				{#each data.columns as column}
@@ -165,10 +177,6 @@
 				<div class="text-2xl">Get started with a new column!</div>
 			{/if}
 		{/if}
-	</div>
-	<div class="absolute right-0 top-0 flex items-center gap-4 p-4">
-		<ThemeController />
-		<Button onclick={setShowModal}><Plus onclick={setShowModal} /></Button>
 	</div>
 	{#if showModal}
 		<div
