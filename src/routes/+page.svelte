@@ -78,7 +78,7 @@
 
 <div class="absolute flex w-full items-center justify-between gap-4 p-4">
 	<nav>
-		<h1 class="text-3xl font-semibold uppercase">CardFlow</h1>
+		<h1 class="text-3xl font-bold md:text-5xl">CardFlow.</h1>
 	</nav>
 	<div class="flex gap-4">
 		<ThemeController />
@@ -86,10 +86,8 @@
 	</div>
 </div>
 
-<main>
-	<div
-		class="flex min-h-screen flex-col justify-start gap-4 overflow-auto px-4 pb-4 pt-16 xl:flex-row"
-	>
+<main class="pt-20">
+	<div class="flex min-h-screen flex-col justify-start gap-4 overflow-auto px-4 pb-4 xl:flex-row">
 		{#if !loading}
 			{#if data.columns && data.columns.length !== 0}
 				{#each data.columns as column}
