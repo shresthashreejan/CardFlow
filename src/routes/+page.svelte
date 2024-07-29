@@ -93,7 +93,7 @@
 				{#each data.columns as column}
 					{@const cards = data.cards?.filter((c) => c.column === column.id)}
 					<div
-						class="min-w-full xl:min-w-[20vw] xl:max-w-[20vw]"
+						class="min-w-full xl:min-w-[15vw] xl:max-w-[15vw]"
 						data-columnid={column.id}
 						use:dropZone={{
 							ondropzone(cardId: string) {
